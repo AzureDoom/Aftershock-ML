@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import mod.azure.aftershock.entity.graboid.GraboidEntity;
+import mod.azure.aftershock.entity.SoundTrackingEntity;
 
 public class PortableSeismographItem extends Item {
 
@@ -65,7 +65,10 @@ public class PortableSeismographItem extends Item {
                     - 1
             )
                 entity.level()
-                    .getEntitiesOfClass(GraboidEntity.class, new AABB(entity.blockPosition()).inflate(15D, 15D, 15D))
+                    .getEntitiesOfClass(
+                        SoundTrackingEntity.class,
+                        new AABB(entity.blockPosition()).inflate(15D, 15D, 15D)
+                    )
                     .forEach(e -> {
                         if (e.walkAnimation.speed() >= 0.15F) {
                             this.soundcounter++;

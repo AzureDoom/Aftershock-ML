@@ -26,12 +26,12 @@ import mod.azure.aftershock.ai.core.MobBrainRuntime;
 import mod.azure.aftershock.ai.util.GraboidBurrowUtils;
 import mod.azure.aftershock.ai.util.TargetingSystem;
 import mod.azure.aftershock.ai.util.VibrationTargetSelector;
+import mod.azure.aftershock.entity.SoundTrackingEntity;
 import mod.azure.aftershock.registry.EntityRegistry;
 import mod.azure.aftershock.registry.SoundRegistry;
-import mod.azure.aftershock.util.Growable;
 import mod.azure.aftershock.util.MobUtils;
 
-public class GraboidEntity extends PathfinderMob implements Growable {
+public class GraboidEntity extends SoundTrackingEntity {
 
     protected static final EntityDataAccessor<Float> GROWTH = SynchedEntityData.defineId(
         GraboidEntity.class,

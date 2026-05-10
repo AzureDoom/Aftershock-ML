@@ -1,5 +1,6 @@
 package mod.azure.aftershock.mixins;
 
+import mod.azure.aftershock.items.PortableSeismographItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.world.item.ItemStack;
@@ -43,11 +44,11 @@ public class HeldItemRendererMixin {
         assert clientPlayerEntity != null;
         final var itemStack = clientPlayerEntity.getMainHandItem();
         final var itemStack2 = clientPlayerEntity.getOffhandItem();
-        if (mainHandItem.getItem() instanceof ShotgunItem && ItemStack.isSameItem(mainHandItem, itemStack)) {
+        if ((mainHandItem.getItem() instanceof ShotgunItem || mainHandItem.getItem() instanceof PortableSeismographItem) && ItemStack.isSameItem(mainHandItem, itemStack)) {
             mainHandHeight = 1;
             mainHandItem = itemStack;
         }
-        if (offHandItem.getItem() instanceof ShotgunItem && ItemStack.isSameItem(offHandItem, itemStack2)) {
+        if ((offHandItem.getItem() instanceof ShotgunItem || offHandItem.getItem() instanceof PortableSeismographItem) && ItemStack.isSameItem(offHandItem, itemStack2)) {
             offHandHeight = 1;
             offHandItem = itemStack2;
         }

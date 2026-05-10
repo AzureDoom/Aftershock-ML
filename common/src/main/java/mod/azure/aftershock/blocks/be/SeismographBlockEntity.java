@@ -12,7 +12,7 @@ import net.minecraft.world.phys.AABB;
 
 import mod.azure.aftershock.blocks.SeismographProperties;
 import mod.azure.aftershock.blocks.SeismographStates;
-import mod.azure.aftershock.entity.graboid.GraboidEntity;
+import mod.azure.aftershock.entity.SoundTrackingEntity;
 import mod.azure.aftershock.registry.EntityRegistry;
 
 public class SeismographBlockEntity extends BlockEntity {
@@ -38,7 +38,7 @@ public class SeismographBlockEntity extends BlockEntity {
     public static void tick(Level world, BlockPos pos, BlockState state, SeismographBlockEntity blockEntity) {
         final var aabb = new AABB(pos).inflate(64D, 64D, 64D);
         if (world != null)
-            world.getEntitiesOfClass(GraboidEntity.class, aabb).forEach(e -> {
+            world.getEntitiesOfClass(SoundTrackingEntity.class, aabb).forEach(e -> {
                 if (e.walkAnimation.speed() >= 0.15F) {
                     SeismographBlockEntity.soundcounter++;
                     blockEntity.setChestState(SeismographStates.OPENED);
