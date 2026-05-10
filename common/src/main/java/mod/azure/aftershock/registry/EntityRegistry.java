@@ -47,7 +47,7 @@ public class EntityRegistry {
         "shrieker",
         ShriekerEntity::new,
         0.9F,
-        0.9F
+        1.4F
     );
 
     public static final Supplier<EntityType<BlasterEntity>> BLASTER = registerEntity(

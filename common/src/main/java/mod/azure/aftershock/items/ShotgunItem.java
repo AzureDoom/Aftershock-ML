@@ -131,7 +131,7 @@ public class ShotgunItem extends Item {
         damageEntity(level, player, hitResult);
         damageBlock(level, player, hitResult);
         dispatcher.serverFire(player, itemStack);
-        player.getCooldowns().addCooldown(itemStack.getItem(), 5);
+        player.getCooldowns().addCooldown(itemStack.getItem(), 25);
         level.playSound(player, player.blockPosition(), SoundRegistry.SHOTGUN.get(), SoundSource.PLAYERS, 1F, 1F);
         ItemUtils.spawnLightSource(player, player.level().isWaterAt(player.blockPosition()));
         if (level.isClientSide()) {

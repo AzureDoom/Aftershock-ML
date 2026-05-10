@@ -21,6 +21,8 @@
 	"aftershock.eightgauge.ammo": "Ammo: %s/2",
 	"config.screen.aftershock": "Aftershock Options",
 	"config.aftershock.option.debugPathingParticlesEnabled": "Enables Debug Pathing Particles",
+	"config.aftershock.option.entityConfigs": "Entity Configs",
+	"config.aftershock.option.itemConfigs": "Item Configs",
 	"config.aftershock.option.shotgun_damage": "8 Gauge Damage",
 	"config.aftershock.option.dirt_dragon_health": "Dirt Dragon Health",
 	"config.aftershock.option.dirt_dragon_exp": "Dirt Dragon Exp",

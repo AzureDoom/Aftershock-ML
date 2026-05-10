@@ -78,6 +78,6 @@ public class AftershockConfig {
 
         @Configurable
         @Configurable.Synchronized
-        public float shotgun_damage = 5F;
+        public float shotgun_damage = 20F;
     }
 }
