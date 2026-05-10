@@ -1,0 +1,10 @@
+{
+  "type": "aftershock:mobspawns",
+  "biomes": "#aftershock:spawns_underground_mobs",
+  "spawn": {
+    "type": "aftershock:graboid",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 5
+  }
+}

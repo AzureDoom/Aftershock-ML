@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "mod.azure.aftershock.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "aftershock.refmap.json",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "MixinEntityTypeBuilder_SilenceDataFixerError",
+    "PlayerMixin",
+    "VillagerMixin"
+  ],
+  "client": [
+    "HeldItemRendererMixin",
+    "GameRendererMixin",
+    "MinecraftMixin",
+    "WeaponRenderingMixin"
+  ]
+}
