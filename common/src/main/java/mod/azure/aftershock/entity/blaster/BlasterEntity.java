@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.aftershock.CommonMod;
 import mod.azure.aftershock.ai.core.AiKeys;
 import mod.azure.aftershock.ai.core.MobBrainRuntime;
 import mod.azure.aftershock.ai.util.NearestHeatTargetSelector;
@@ -59,11 +60,16 @@ public class BlasterEntity extends PathfinderMob implements Growable {
         this.moveAnalysis = new MoveAnalysis(this);
     }
 
+    @Override
+    protected int getBaseExperienceReward() {
+        return CommonMod.getConfig().entityConfigs.blaster_exp;
+    }
+
     public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes()
             .add(Attributes.FOLLOW_RANGE, 16.0F)
-            .add(Attributes.ATTACK_DAMAGE, 5F)
-            .add(Attributes.MAX_HEALTH, 40)
+            .add(Attributes.ATTACK_DAMAGE, CommonMod.getConfig().entityConfigs.blaster_damage)
+            .add(Attributes.MAX_HEALTH, CommonMod.getConfig().entityConfigs.blaster_health)
             .add(Attributes.MOVEMENT_SPEED, 0.12F);
     }
 

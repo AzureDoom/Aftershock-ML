@@ -2,6 +2,7 @@ package mod.azure.aftershock.entity.graboid;
 
 import net.minecraft.world.entity.LivingEntity;
 
+import mod.azure.aftershock.CommonMod;
 import mod.azure.aftershock.ai.actions.graboid.SurfaceBreachAttackAction;
 import mod.azure.aftershock.ai.actions.graboid.UndergroundStalkTargetAction;
 import mod.azure.aftershock.ai.actions.graboid.UndergroundWanderAction;
@@ -16,9 +17,9 @@ public class GrabiodTree {
     public static BehaviorNode<GraboidEntity> create() {
         var breach = new SurfaceBreachAttackAction<GraboidEntity>(
             3.0D,
-            8.0F,
-            8.0F,
-            3.0D,
+            CommonMod.getConfig().entityConfigs.graboid_damage,
+            0.0F,
+            5.0D,
             100,
             SoundRegistry.GRABOID_ATTACKING.get(),
             0.90D,

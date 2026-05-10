@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.aftershock.CommonMod;
 import mod.azure.aftershock.ai.core.MobBrainRuntime;
 import mod.azure.aftershock.ai.util.GraboidBurrowUtils;
 import mod.azure.aftershock.ai.util.TargetingSystem;
@@ -71,11 +72,17 @@ public class GraboidEntity extends SoundTrackingEntity {
         this.moveAnalysis = new MoveAnalysis(this);
     }
 
+    @Override
+    protected int getBaseExperienceReward() {
+        return CommonMod.getConfig().entityConfigs.graboid_exp;
+    }
+
     public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes()
             .add(Attributes.FOLLOW_RANGE, 16.0F)
-            .add(Attributes.ATTACK_DAMAGE, 5F)
-            .add(Attributes.MAX_HEALTH, 40)
+            .add(Attributes.ATTACK_DAMAGE, CommonMod.getConfig().entityConfigs.graboid_damage)
+            .add(Attributes.MAX_HEALTH, CommonMod.getConfig().entityConfigs.graboid_health)
+            .add(Attributes.ARMOR, CommonMod.getConfig().entityConfigs.graboid_armor)
             .add(Attributes.MOVEMENT_SPEED, 0.12F);
     }
 

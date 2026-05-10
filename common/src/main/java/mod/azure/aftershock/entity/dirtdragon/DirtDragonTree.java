@@ -2,6 +2,7 @@ package mod.azure.aftershock.entity.dirtdragon;
 
 import net.minecraft.world.entity.LivingEntity;
 
+import mod.azure.aftershock.CommonMod;
 import mod.azure.aftershock.ai.actions.dirtdragon.TackleBreachAction;
 import mod.azure.aftershock.ai.actions.graboid.UndergroundStalkTargetAction;
 import mod.azure.aftershock.ai.actions.graboid.UndergroundWanderAction;
@@ -17,7 +18,7 @@ public class DirtDragonTree {
             0.05D,
             0.2D,
             1.25D,
-            6.0F,
+            CommonMod.getConfig().entityConfigs.dirt_dragon_damage,
             100,
             AiKeys.TACKLE_COOLDOWN,
             80,

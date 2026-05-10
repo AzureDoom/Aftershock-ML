@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.aftershock.CommonMod;
 import mod.azure.aftershock.ai.core.MobBrainRuntime;
 import mod.azure.aftershock.ai.util.NearestHeatTargetSelector;
 import mod.azure.aftershock.ai.util.TargetingSystem;
@@ -75,6 +76,11 @@ public class ShriekerEntity extends PathfinderMob implements Growable {
     }
 
     @Override
+    protected int getBaseExperienceReward() {
+        return CommonMod.getConfig().entityConfigs.shrieker_exp;
+    }
+
+    @Override
     public float maxUpStep() {
         return 3.0F;
     }
@@ -82,8 +88,8 @@ public class ShriekerEntity extends PathfinderMob implements Growable {
     public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes()
             .add(Attributes.FOLLOW_RANGE, 16.0F)
-            .add(Attributes.ATTACK_DAMAGE, 5F)
-            .add(Attributes.MAX_HEALTH, 40)
+            .add(Attributes.ATTACK_DAMAGE, CommonMod.getConfig().entityConfigs.shrieker_damage)
+            .add(Attributes.MAX_HEALTH, CommonMod.getConfig().entityConfigs.shrieker_health)
             .add(Attributes.MOVEMENT_SPEED, 0.12F);
     }
 

@@ -140,7 +140,7 @@ public class ShotgunItem extends Item {
     }
 
     private void reloadFromInventory(@NotNull Level level, @NotNull Player player, ItemStack shotgunStack) {
-        int ammo = getAmmo(shotgunStack);
+        var ammo = getAmmo(shotgunStack);
 
         if (ammo >= 2) {
             return;
@@ -213,7 +213,10 @@ public class ShotgunItem extends Item {
                 ((EntityHitResult) hitResult).getEntity() instanceof LivingEntity livingEntity
         ) {
             livingEntity.invulnerableTime = 0;
-            livingEntity.hurt(level.damageSources().playerAttack(player), 5F);
+            livingEntity.hurt(
+                level.damageSources().playerAttack(player),
+                CommonMod.getConfig().itemConfigs.shotgun_damage
+            );
         }
     }
 
