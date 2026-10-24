@@ -1,6 +1,9 @@
 package mod.azure.aftershock.entity.graboid;
 
 import mod.azure.azurelib.common.util.MoveAnalysis;
+import mod.azure.azurelib.common.hitbox.AzHitboxHolder;
+import mod.azure.azurelib.common.hitbox.AzHitboxSet;
+import mod.azure.azurelib.common.hitbox.AzHitboxes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,22 +36,22 @@ import mod.azure.aftershock.registry.EntityRegistry;
 import mod.azure.aftershock.registry.SoundRegistry;
 import mod.azure.aftershock.util.MobUtils;
 
-public class GraboidEntity extends SoundTrackingEntity {
+public class GraboidEntity extends SoundTrackingEntity implements AzHitboxHolder {
 
     protected static final EntityDataAccessor<Float> GROWTH = SynchedEntityData.defineId(
-        GraboidEntity.class,
-        EntityDataSerializers.FLOAT
+            GraboidEntity.class,
+            EntityDataSerializers.FLOAT
     );
 
     private static final EntityDataAccessor<Boolean> DATA_BURROWING =
-        SynchedEntityData.defineId(GraboidEntity.class, EntityDataSerializers.BOOLEAN);
+            SynchedEntityData.defineId(GraboidEntity.class, EntityDataSerializers.BOOLEAN);
 
     private static final EntityDataAccessor<Boolean> DATA_BEACHED =
-        SynchedEntityData.defineId(GraboidEntity.class, EntityDataSerializers.BOOLEAN);
+            SynchedEntityData.defineId(GraboidEntity.class, EntityDataSerializers.BOOLEAN);
 
     public static final EntityDataAccessor<Boolean> ALBINO = SynchedEntityData.defineId(
-        GraboidEntity.class,
-        EntityDataSerializers.BOOLEAN
+            GraboidEntity.class,
+            EntityDataSerializers.BOOLEAN
     );
 
     private final MobBrainRuntime<GraboidEntity> brainRuntime;
@@ -61,12 +65,12 @@ public class GraboidEntity extends SoundTrackingEntity {
     public GraboidEntity(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         this.brainRuntime = new MobBrainRuntime<>(
-            this,
-            new TargetingSystem<>(
-                new VibrationTargetSelector<>(64.0D),
-                10
-            ),
-            GrabiodTree.create()
+                this,
+                new TargetingSystem<>(
+                        new VibrationTargetSelector<>(64.0D),
+                        10
+                ),
+                GrabiodTree.create()
         );
         this.animationDispatcher = new GraboidAnimationDispatcher(this);
         this.moveAnalysis = new MoveAnalysis(this);
@@ -79,11 +83,11 @@ public class GraboidEntity extends SoundTrackingEntity {
 
     public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes()
-            .add(Attributes.FOLLOW_RANGE, 16.0F)
-            .add(Attributes.ATTACK_DAMAGE, CommonMod.getConfig().entityConfigs.graboid_damage)
-            .add(Attributes.MAX_HEALTH, CommonMod.getConfig().entityConfigs.graboid_health)
-            .add(Attributes.ARMOR, CommonMod.getConfig().entityConfigs.graboid_armor)
-            .add(Attributes.MOVEMENT_SPEED, 0.12F);
+                .add(Attributes.FOLLOW_RANGE, 16.0F)
+                .add(Attributes.ATTACK_DAMAGE, CommonMod.getConfig().entityConfigs.graboid_damage)
+                .add(Attributes.MAX_HEALTH, CommonMod.getConfig().entityConfigs.graboid_health)
+                .add(Attributes.ARMOR, CommonMod.getConfig().entityConfigs.graboid_armor)
+                .add(Attributes.MOVEMENT_SPEED, 0.12F);
     }
 
     @Override
@@ -93,6 +97,33 @@ public class GraboidEntity extends SoundTrackingEntity {
             this.level().broadcastEntityEvent(this, (byte) 60);
             this.remove(RemovalReason.KILLED);
         }
+    }
+
+    @Override
+    public @NotNull AABB makeBoundingBox() {
+        var pos = this.position();
+        var height = this.getDimensions(Pose.STANDING).height();
+        var halfX = (6.4) / 2.0;
+        var halfZ = (4.6) / 2.0;
+
+        return new AABB(
+                pos.x - halfX,
+                pos.y,
+                pos.z - halfZ,
+                pos.x + halfX,
+                pos.y + height,
+                pos.z + halfZ
+        );
+    }
+
+    @Override
+    public AzHitboxSet getHitboxSet() {
+        return GraboidHitboxes.SET;
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        return AzHitboxes.getCullingBox(this, super.getBoundingBoxForCulling());
     }
 
     @Override
@@ -124,10 +155,10 @@ public class GraboidEntity extends SoundTrackingEntity {
 
     @Override
     public @Nullable SpawnGroupData finalizeSpawn(
-        @NotNull ServerLevelAccessor level,
-        @NotNull DifficultyInstance difficulty,
-        @NotNull MobSpawnType spawnType,
-        @Nullable SpawnGroupData spawnGroupData
+            @NotNull ServerLevelAccessor level,
+            @NotNull DifficultyInstance difficulty,
+            @NotNull MobSpawnType spawnType,
+            @Nullable SpawnGroupData spawnGroupData
     ) {
         if (spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.COMMAND)
             setGrowth(1200);
@@ -210,9 +241,9 @@ public class GraboidEntity extends SoundTrackingEntity {
             double nextY = Math.min(surfaceY, this.getY() + 0.25D);
 
             this.setPos(
-                this.getX(),
-                nextY,
-                this.getZ()
+                    this.getX(),
+                    nextY,
+                    this.getZ()
             );
 
             this.setDeltaMovement(0.0D, 0.0D, 0.0D);
@@ -221,9 +252,9 @@ public class GraboidEntity extends SoundTrackingEntity {
         }
 
         this.setPos(
-            this.getX(),
-            surfaceY,
-            this.getZ()
+                this.getX(),
+                surfaceY,
+                this.getZ()
         );
 
         this.setDeltaMovement(0.0D, 0.0D, 0.0D);
@@ -312,7 +343,7 @@ public class GraboidEntity extends SoundTrackingEntity {
         areaEffectCloudEntity.setDuration(20);
         areaEffectCloudEntity.setParticle(ParticleTypes.POOF);
         areaEffectCloudEntity.setRadiusPerTick(
-            -areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration()
+                -areaEffectCloudEntity.getRadius() / (float) areaEffectCloudEntity.getDuration()
         );
         entity.level().addFreshEntity(areaEffectCloudEntity);
         return this.isAlbino() ? null : entity;

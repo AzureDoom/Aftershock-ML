@@ -9,6 +9,7 @@ import mod.azure.aftershock.ai.actions.shrieker.StatisAction;
 import mod.azure.aftershock.ai.core.AiKeys;
 import mod.azure.aftershock.ai.core.BehaviorNode;
 import mod.azure.aftershock.ai.core.BehaviorResult;
+import net.minecraft.world.entity.LivingEntity;
 
 public class ShriekerTree {
 
@@ -82,7 +83,7 @@ public class ShriekerTree {
                 return BehaviorResult.run(pukeAction, 2);
             }
 
-            var target = blackboard.get(AiKeys.TARGET, net.minecraft.world.entity.LivingEntity.class);
+            var target = blackboard.get(AiKeys.TARGET, LivingEntity.class);
             if (target != null && target.isAlive()) {
                 var distSqr = mob.distanceToSqr(target);
                 if (distSqr <= 6.25 && !cooldowns.isOnCooldown(AiKeys.BITE_COOLDOWN)) {

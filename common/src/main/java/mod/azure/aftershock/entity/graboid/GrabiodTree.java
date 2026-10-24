@@ -16,44 +16,45 @@ public class GrabiodTree {
 
     public static BehaviorNode<GraboidEntity> create() {
         var breach = new SurfaceBreachAttackAction<GraboidEntity>(
-            3.0D,
-            CommonMod.getConfig().entityConfigs.graboid_damage,
-            0.0F,
-            5.0D,
-            100,
-            SoundRegistry.GRABOID_ATTACKING.get(),
-            0.90D,
-            0.15D,
-            0.15D,
-            graboid -> graboid.animationDispatcher.serverGrabOne(),
-            graboid -> graboid.animationDispatcher.serverErupting(),
-            graboid -> graboid.animationDispatcher.serverBite()
+                3.0D,
+                CommonMod.getConfig().entityConfigs.graboid_damage,
+                0.0F,
+                CommonMod.getConfig().entityConfigs.graboid_damage * 0.4F,
+                5.0D,
+                100,
+                SoundRegistry.GRABOID_ATTACKING.get(),
+                0.90D,
+                0.15D,
+                0.15D,
+                graboid -> graboid.animationDispatcher.serverGrabOne(),
+                graboid -> graboid.animationDispatcher.serverErupting(),
+                graboid -> graboid.animationDispatcher.serverBite()
         );
 
         var stalk = new UndergroundStalkTargetAction<GraboidEntity>(
-            0.22D,
-            5.0D,
-            5.0D,
-            0.5D,
-            1.5D,
-            10,
-            60,
-            null,
-            30,
-            80
+                0.22D,
+                5.0D,
+                5.0D,
+                0.5D,
+                1.5D,
+                10,
+                60,
+                null,
+                30,
+                80
         );
 
         var wander = new UndergroundWanderAction<GraboidEntity>(
-            0.15D,
-            18.0D,
-            5.0D,
-            6.0D,
-            80,
-            180,
-            10,
-            null,
-            90,
-            180
+                0.15D,
+                18.0D,
+                5.0D,
+                6.0D,
+                80,
+                180,
+                10,
+                null,
+                90,
+                180
         );
 
         return (mob, blackboard, cooldowns) -> {
@@ -78,10 +79,10 @@ public class GrabiodTree {
         }
 
         var horizontalDistanceSqr = horizontalDistanceSqr(
-            mob.getX(),
-            mob.getZ(),
-            target.getX(),
-            target.getZ()
+                mob.getX(),
+                mob.getZ(),
+                target.getX(),
+                target.getZ()
         );
 
         if (horizontalDistanceSqr > 0.5D * 0.5D) {
